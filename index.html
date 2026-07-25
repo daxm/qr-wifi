@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>qr-wifi &mdash; Guest WiFi Sign Generator</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div class="layout">
+    <form class="panel no-print" id="wifi-form">
+      <h1>qr-wifi</h1>
+      <p class="subtitle">Generate a printable guest WiFi sign with a QR code, optional logo, and any caption text you like.</p>
+
+      <fieldset>
+        <legend>Network</legend>
+
+        <label for="ssid-input">SSID (network name)</label>
+        <input id="ssid-input" type="text" maxlength="32" placeholder="Guest" required />
+        <span class="hint" id="ssid-char-count">0/32</span>
+
+        <label for="security-select">Security</label>
+        <select id="security-select">
+          <option value="wpa2" selected>WPA2</option>
+          <option value="wpa">WPA</option>
+          <option value="wpa3">WPA3</option>
+          <option value="wep">WEP</option>
+          <option value="nopass">Open (no password)</option>
+        </select>
+
+        <label for="password-input">Password / PSK</label>
+        <div class="input-with-button">
+          <input id="password-input" type="password" placeholder="wifi password" />
+          <button type="button" id="toggle-password-btn">Show</button>
+        </div>
+
+        <label class="checkbox-label">
+          <input id="hidden-checkbox" type="checkbox" />
+          Hidden network
+        </label>
+      </fieldset>
+
+      <fieldset>
+        <legend>Logo (optional)</legend>
+        <input id="logo-input" type="file" accept="image/*" />
+        <img id="logo-thumb" alt="Logo preview" hidden />
+        <button type="button" id="logo-remove-btn" hidden>Remove logo</button>
+
+        <label for="logo-size-slider">Logo size</label>
+        <input id="logo-size-slider" type="range" min="0.10" max="0.25" step="0.01" value="0.18" />
+        <p class="warning" id="logo-warning" hidden>
+          Large logos can prevent the code from scanning &mdash; test with your phone before printing.
+        </p>
+      </fieldset>
+
+      <fieldset>
+        <legend>Caption text</legend>
+        <label for="caption-textarea">Shown below the QR code (any text &mdash; PSK, expiration, notes, etc.)</label>
+        <textarea id="caption-textarea" rows="4" placeholder="PSK: your-password-here&#10;Expires: 2026-08-01"></textarea>
+      </fieldset>
+
+      <div class="actions">
+        <button type="button" id="download-png-btn">Download PNG</button>
+        <button type="button" id="print-btn">Print Sign</button>
+      </div>
+    </form>
+
+    <div class="panel sign" id="sign">
+      <div id="qr-preview" class="qr-preview"></div>
+      <div id="caption-preview" class="caption-preview"></div>
+    </div>
+  </div>
+
+  <script src="vendor/qr-code-styling.js"></script>
+  <script src="js/wifi-format.js"></script>
+  <script src="js/qr-render.js"></script>
+  <script src="js/caption.js"></script>
+  <script src="js/export.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
